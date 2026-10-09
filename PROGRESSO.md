@@ -18,3 +18,11 @@
 - Dados: carro a 20 m/s, t = linspace(0, 10, 25), ruído N(0, 10), semente 42; 2º experimento com b = 30 m.
 - Gráficos: tangentes na parábola, erro caindo (log), mapa de contorno E(w, b) com o caminho.
 - Para o Módulo 02: o vale estreito de E(w, b) (b converge devagar porque t vai até 10) foi anunciado como motivação para normalizar.
+
+## Módulo 02: Várias variáveis (2026-10-09)
+- Arquivos: `fontes/02-varias-variaveis.py`, `modulos/02-varias-variaveis.ipynb`.
+- Conceitos: vetor, produto escalar (`@`), matriz (linhas = exemplos, colunas = atributos), Xw + b, atributo/alvo, gradiente vetorial (2/n) Xᵀe, transposta, vetorização (laços × `X.T @`), escala, padronização z-score, desnormalizar pesos, `np.linalg.lstsq` com coluna de uns, engenharia de atributos (t²).
+- Funções: `prever(X, w, b)`, `erro_quadratico_medio`, `gradientes(X, y, w, b)`, `treinar_regressao(X, y, taxa, passos)` (começa de zeros; devolve w, b, histórico), `normalizar(X)` → (X_norm, media, desvio), `desnormalizar_pesos(w, b, media, desvio)`.
+- Dados: 200 dias de consumo de energia (banho min, horas de ar, lavagens; pesos 0.09, 1.0, 0.8; viés 2.5; ruído 0.5; semente 42). Bola lançada: h = 1.5 + 15t − 4.9t², 60 pontos. Desafio: pêndulo T² = 4π²L/g.
+- Taxas: sem normalizar diverge a partir de 0.0008; normalizado usa 0.1 a 0.3.
+- Para o Módulo 03: o aluno já usa `@`, `X.T`, `normalizar`; pode reaproveitar o padrão de treino com dois atributos (horas de estudo, exercícios).
