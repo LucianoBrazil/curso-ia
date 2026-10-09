@@ -64,3 +64,11 @@
 - Resultados: vale do Módulo 01 (200 passos): momento chega ao mínimo, Adam (taxa 1) quase; dígitos: SGD 0.1 → val 97.5%, Adam 0.001 → val 98.3%, teste 96.1%.
 - Instalação: o índice download.pytorch.org está bloqueado pelo proxy; `pip install -q torch` (PyPI) funciona, mas é grande e demora alguns minutos.
 - Para o Módulo 08: o corpus em inglês vai em `dados/` (100 KB a 1 MB), com download de raw.githubusercontent.com quando o notebook não achar `../dados/`.
+
+## Módulo 08: Texto vira número (2026-10-09)
+- Arquivos: `fontes/08-texto-vira-numero.py`, `modulos/08-texto-vira-numero.ipynb`, `dados/alice.txt`.
+- Dados: *Alice's Adventures in Wonderland* (Lewis Carroll, 1865, domínio público), arquivo `carroll-alice.txt` do corpus Gutenberg do NLTK (baixado de raw.githubusercontent.com/nltk/nltk_data, gutenberg.zip). 144 395 caracteres, ASCII. Usado com `.lower()`: vocabulário de 47 caracteres (inclui '\n'). Divisão por posição: 90% treino (129 955), 10% validação.
+- Carregamento: `carregar_texto()` lê `../dados/alice.txt` ou baixa de `https://raw.githubusercontent.com/LucianoBrazil/curso-ia/main/dados/alice.txt`.
+- Conceitos: modelo de linguagem, tokens (caractere/palavra/subword), vocabulário, codificar/decodificar, probabilidade condicional, bigrama por contagem, mapa de calor, suavização (+1), amostragem, temperatura (nota Boltzmann), entropia cruzada e perplexidade, explosão combinatória de n-gramas.
+- Funções: `carregar_texto`, `indice_de`, `caractere_de`, `codificar`, `decodificar`, `contar_bigramas`, `probabilidades_bigrama(contagens, suavizacao)`, `gerar_texto(probabilidades, inicio, n, temperatura, semente)`, `perplexidade_bigrama`.
+- Perplexidade na validação: uniforme 47, unigrama 20.9, bigrama 11.1, trigrama (suavização 0.1) 6.4. Use esses números para comparar no Módulo 09.
