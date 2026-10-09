@@ -92,3 +92,9 @@
 - Conceitos: θ'' = −(g/L) sen θ, período de ângulos pequenos (L=1 → 2,007 s), energia como detector, Euler explícito (energia cresce) × semi-implícito/Euler-Cromer (simplético), aprender o passo prevendo a variação (ligação com residuais), rollout autorregressivo, acúmulo de erros (Nε, fase escorrega, caos), remédios (treino multi-passo, redes hamiltonianas, assimilação de dados, híbridos).
 - Funções: `energia`, `simular(theta0, omega0, duracao, dt, metodo)`, `passo_verdadeiro` (50 subpassos de 0,001 s), `trajetoria_verdadeira`, `passo_rede`, `trajetoria_rede`, `medir_periodo`.
 - Dados/treino: 4000 estados θ U(−2.5,2.5), ω U(−6,6), semente 42; rede 2-64-64-2 tanh, Adam 0.003 → 0.0003, 3000 passos lote inteiro (9 s). Erro de um passo: 0,0003 rad. Rollout de 1 rad: maior erro por janela de 10 s 0,03 → 0,55 rad em 2 min; energia deriva para cima. Notebook ~21 s.
+
+## Módulo B2: Redes convolucionais (2026-10-09)
+- Arquivos: `fontes/B2-redes-convolucionais.py`, `modulos/B2-redes-convolucionais.ipynb`.
+- Conceitos: convolução (correlação cruzada) à mão (imagem 5×5 com borda, filtro [-1,0,1] → mapa [0,3,3]), filtro de borda = derivada discreta, padding, canais, max pooling, compartilhamento de pesos, contagem de parâmetros, `nn.Conv2d`/`nn.MaxPool2d` conferidos com a função NumPy, deslocamento de imagens, invariância à translação (parcial), global pooling (só citado), filtros e mapas aprendidos, história (LeNet, AlexNet), aumento de dados.
+- Funções: `convoluir(imagem, filtro)`, `para_tensores(indices, imagens_fonte)` → (n,1,8,8), `criar_rede_densa`, `criar_cnn` (6090 parâmetros), `treinar(rede, X, y, ...)`, `acuracia`, `deslocar(imagens, linhas, colunas)`.
+- Resultados (mesma divisão do Módulo 05, semente 42): validação 98,3% nas duas; teste densa 96,1%, CNN 98,1%. Deslocadas 1 px: densa 38–49%, CNN 49–82%. Desafio: densa com aumento de dados 80–91% nas deslocadas (93,1% nas originais). Notebook ~16 s.
