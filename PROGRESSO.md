@@ -41,3 +41,10 @@
 - Funções: `relu`, `derivada_relu`, `inicializar_rede(n_entradas, n_ocultos, semente)` → dict W1,b1,W2,b2 (N(0,1)), `propagacao_frente(X, rede)` → P, memoria, `retropropagacao(y, rede, memoria)`, `conferir_gradientes`, `treinar_rede(X, y, n_ocultos, taxa, passos, semente)`, `acuracia_rede`, `desenhar_regioes(eixo, calcular_probabilidade, X, y, titulo)`. y é coluna (n, 1).
 - Dados: nuvem XOR, 50 pontos por canto, ruído 0.15, semente 42. Regressão logística 52%; rede 8 ReLU, taxa 0.5, 3000 passos: 100%.
 - Para o Módulo 05: generalizar a saída para softmax (10 classes) e treinar com minilotes; a rede atual tem uma saída sigmoide.
+
+## Módulo 05: Dígitos (2026-10-09)
+- Arquivos: `fontes/05-digitos.py`, `modulos/05-digitos.ipynb`.
+- Conceitos: pixel, imagem como tabela, achatar (64), X/16, generalização, treino/validação/teste 60/20/20 (permutação, semente 42), softmax (estável, subtrai o máximo), one-hot, entropia cruzada multiclasse, gradiente p − y conferido numericamente, inicialização de He, minilotes, época, SGD, sobreajuste (100 imagens: 100% treino × ~89% validação), parada antecipada, matriz de confusão 10×10, galeria de erros.
+- Funções: `softmax(Z)`, `codificar_one_hot(rotulos, n_classes=10)`, `entropia_cruzada(P, Y)`, `inicializar_rede(n_entradas, n_ocultos, n_saidas, semente)` (He), `propagacao_frente`, `retropropagacao`, `conferir_gradientes`, `avaliar(X, Y, rede)` → perda, acurácia, `treinar_minilotes(X, Y, X_val, Y_val, n_ocultos, taxa, epocas, tamanho_lote, semente)` → rede, historico (perda/acc treino/val), `desenhar_historico`.
+- Resultado: 64-64-10 ReLU, taxa 0.1, lote 32, 40 épocas → treino 99.4%, validação 97.5%, teste 95.6% (16 erros em 360).
+- Para o Módulo 07: refazer esta rede em PyTorch e comparar (mesma divisão de dados e semente).
