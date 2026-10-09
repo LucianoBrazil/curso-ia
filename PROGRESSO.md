@@ -72,3 +72,10 @@
 - Conceitos: modelo de linguagem, tokens (caractere/palavra/subword), vocabulário, codificar/decodificar, probabilidade condicional, bigrama por contagem, mapa de calor, suavização (+1), amostragem, temperatura (nota Boltzmann), entropia cruzada e perplexidade, explosão combinatória de n-gramas.
 - Funções: `carregar_texto`, `indice_de`, `caractere_de`, `codificar`, `decodificar`, `contar_bigramas`, `probabilidades_bigrama(contagens, suavizacao)`, `gerar_texto(probabilidades, inicio, n, temperatura, semente)`, `perplexidade_bigrama`.
 - Perplexidade na validação: uniforme 47, unigrama 20.9, bigrama 11.1, trigrama (suavização 0.1) 6.4. Use esses números para comparar no Módulo 09.
+
+## Módulo 09: Modelo neural de caracteres (2026-10-09)
+- Arquivos: `fontes/09-modelo-neural-caracteres.py`, `modulos/09-modelo-neural-caracteres.ipynb`. Dados: `dados/alice.txt` (mesma preparação do Módulo 08).
+- Conceitos: janela de contexto (exemplo à mão "alice was", k=3), embedding = one-hot × C (exemplo à mão), `nn.Embedding`, `nn.Flatten`, tanh, modelo de Bengio et al. (2003) em `nn.Sequential`, minilotes sorteados, redução da taxa (÷10 nos últimos 25%), temperatura via softmax(z/T), PCA via SVD como "sombra", comparação com n-gramas.
+- Funções: `montar_exemplos(indices, tamanho_contexto)` → (contextos, alvos) tensores, `criar_modelo(tamanho_contexto=8, dim_embedding=10, n_ocultos=200)`, `treinar_modelo(modelo, passos=6000, tamanho_lote=128, taxa=0.003, ...)` (usa X_treino/X_validacao globais), `gerar_texto(modelo, inicio, n, temperatura, semente)`, `perda_da_frase`, `mais_provaveis`.
+- Resultado: 26 117 parâmetros, treino ~12 s, perplexidade de validação 5.29 (bigrama 11.1, trigrama 6.4). Embeddings: pontuação agrupada, vogais próximas, algarismos espalhados.
+- Para o Módulo 10: comparar o Transformer com a perplexidade 5.29; usar o mesmo texto, `.lower()`, divisão 90/10 por posição.
