@@ -16,7 +16,7 @@ Um curso de inteligência artificial em português, do zero até um Transformer 
 | 01 | O que é "aprender": ajustando uma reta | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/01-ajustando-uma-reta.ipynb) |
 | 02 | Várias variáveis: vetores, matrizes e normalização | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/02-varias-variaveis.ipynb) |
 | 03 | Classificação: regressão logística | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/03-regressao-logistica.ipynb) |
-| 04 | A primeira rede neural, do zero | em breve |
+| 04 | A primeira rede neural, do zero | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/04-primeira-rede-neural.ipynb) |
 | 05 | Reconhecendo dígitos escritos à mão | em breve |
 | 06 | Física + IA: o lançamento oblíquo | em breve |
 | 07 | PyTorch e a derivada automática | em breve |

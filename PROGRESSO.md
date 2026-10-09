@@ -34,3 +34,10 @@
 - Dados: 200 alunos, horas U(0,20), exercícios inteiros 0–50, regra z = 0.4h + 0.1e − 7, rótulo sorteado (Bernoulli), semente 42. Acurácia no treino: 80%.
 - Avisado: acurácia medida no próprio treino; separação treino/teste fica para o Módulo 05.
 - Para o Módulo 04: o "próximo módulo" anunciado é o caso em que uma reta não separa as classes (XOR).
+
+## Módulo 04: Primeira rede neural (2026-10-09)
+- Arquivos: `fontes/04-primeira-rede-neural.py`, `modulos/04-primeira-rede-neural.ipynb`.
+- Conceitos: XOR como lâmpada de escada (three-way), linearmente separável, neurônio, camada escondida/saída, rede XOR montada à mão (OU, E) e o espaço escondido, por que a ativação é necessária, sigmoide × ReLU, regra da cadeia, retropropagação à mão (rede 1-1-1: x=1, w1=0.5, w2=1, y=1 → dL/dw1 = −0.0821), tabela elo → matriz, inicialização aleatória (quebra de simetria), dicionário Python, gradient checking com `np.ndindex`, gradiente que encolhe na sigmoide (≤ 0.25).
+- Funções: `relu`, `derivada_relu`, `inicializar_rede(n_entradas, n_ocultos, semente)` → dict W1,b1,W2,b2 (N(0,1)), `propagacao_frente(X, rede)` → P, memoria, `retropropagacao(y, rede, memoria)`, `conferir_gradientes`, `treinar_rede(X, y, n_ocultos, taxa, passos, semente)`, `acuracia_rede`, `desenhar_regioes(eixo, calcular_probabilidade, X, y, titulo)`. y é coluna (n, 1).
+- Dados: nuvem XOR, 50 pontos por canto, ruído 0.15, semente 42. Regressão logística 52%; rede 8 ReLU, taxa 0.5, 3000 passos: 100%.
+- Para o Módulo 05: generalizar a saída para softmax (10 classes) e treinar com minilotes; a rede atual tem uma saída sigmoide.
