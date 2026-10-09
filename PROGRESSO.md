@@ -48,3 +48,11 @@
 - Funções: `softmax(Z)`, `codificar_one_hot(rotulos, n_classes=10)`, `entropia_cruzada(P, Y)`, `inicializar_rede(n_entradas, n_ocultos, n_saidas, semente)` (He), `propagacao_frente`, `retropropagacao`, `conferir_gradientes`, `avaliar(X, Y, rede)` → perda, acurácia, `treinar_minilotes(X, Y, X_val, Y_val, n_ocultos, taxa, epocas, tamanho_lote, semente)` → rede, historico (perda/acc treino/val), `desenhar_historico`.
 - Resultado: 64-64-10 ReLU, taxa 0.1, lote 32, 40 épocas → treino 99.4%, validação 97.5%, teste 95.6% (16 erros em 360).
 - Para o Módulo 07: refazer esta rede em PyTorch e comparar (mesma divisão de dados e semente).
+
+## Módulo 06: Física + IA, lançamento oblíquo (2026-10-09)
+- Arquivos: `fontes/06-fisica-lancamento.py`, `modulos/06-fisica-lancamento.ipynb`.
+- Conceitos: R = v0² sen(2θ)/g (dedução e exemplo à mão), arrasto quadrático a = −c|v|v (c = 0.013 m⁻¹, bola de futebol), método de Euler (exemplo à mão, primeira ordem), interpolação linear no pouso, ângulo ótimo < 45° com ar, regressão com rede (saída linear + MSE, dZ2 = 2(ŷ − y)/n), normalizar alvo, estatísticas só do treino, erro médio absoluto, modelo substituto, extrapolação, quando usar IA em Física.
+- Funções: `alcance_sem_ar(v0, angulo_graus)`, `simular_trajetoria(v0, angulo_graus, c, dt)` → x, y, `simular_alcances(velocidades, angulos_graus, c, dt)` (vetorizado), `inicializar_rede`/`propagacao_frente`/`retropropagacao` (regressão), `conferir_gradientes`, `treinar(X, y, X_val, y_val, n_ocultos, taxa, epocas, tamanho_lote, semente)`, `prever_alcance(rede, v, ângulo)`.
+- Dados: 2000 chutes, v U(10,35), θ U(10,70), semente 42, divisão 1200/400/400. Rede 2-64-1, taxa 0.05, 300 épocas: erro médio 0.34 m no teste; fora da faixa (60 m/s, 40°) prevê 86 m contra 99 m simulados. Desafio: atributo "alcance sem ar" reduz o erro para 0.17 m, mas extrapola para cima.
+- Observação: neste contêiner o NumPy é lento com arrays grandes; não prometer razões fixas de tempo nos textos.
+- Para o Módulo 07: refazer em PyTorch a rede do Módulo 05 (softmax, dígitos) e conferir o autograd com o exemplo à mão do Módulo 04 (x=1, w1=0.5, w2=1, y=1 → dL/dw1 = −0.0821, dL/dw2 = −0.2174).

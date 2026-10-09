@@ -18,7 +18,7 @@ Um curso de inteligência artificial em português, do zero até um Transformer 
 | 03 | Classificação: regressão logística | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/03-regressao-logistica.ipynb) |
 | 04 | A primeira rede neural, do zero | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/04-primeira-rede-neural.ipynb) |
 | 05 | Reconhecendo dígitos escritos à mão | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/05-digitos.ipynb) |
-| 06 | Física + IA: o lançamento oblíquo | em breve |
+| 06 | Física + IA: o lançamento oblíquo | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/06-fisica-lancamento.ipynb) |
 | 07 | PyTorch e a derivada automática | em breve |
 | 08 | Linguagem 1: texto vira número | em breve |
 | 09 | Linguagem 2: um mini modelo neural que escreve em inglês | em breve |
