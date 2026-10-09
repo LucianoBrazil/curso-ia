@@ -86,3 +86,9 @@
 - Classes/funções: `CabecaAtencao`, `AtencaoVariasCabecas`, `BlocoTransformer`, `MiniTransformer(dim_modelo=64, n_cabecas=4, n_blocos=3, usar_mascara, usar_posicao)`, `sortear_lote`, `perda_media`, `treinar_transformer(modelo, passos=2000, tamanho_lote=32, taxa=0.003, fracao_reducao=0.8, ...)`, `gerar_texto`.
 - Resultado: 159 663 parâmetros, contexto 64, 2000 passos (89 s aqui com 4 threads; ~51 ms/passo com 2 threads), perplexidade de validação 4.32. Notebook inteiro: ~2m20s aqui; no Colab, estimado em 3 a 4 min. Exercícios: sem posição 1.985 × 1.776 (passo 500); sem máscara, perda de treino 0.047 e geração sem sentido.
 - Plano principal concluído (00 a 10). Bônus B1–B3 só se o aluno pedir.
+
+## Módulo B1: Pêndulo (2026-10-09)
+- Arquivos: `fontes/B1-pendulo.py`, `modulos/B1-pendulo.ipynb`. README ganhou a seção "Bônus" (B1 com link; B2 e B3 sem link).
+- Conceitos: θ'' = −(g/L) sen θ, período de ângulos pequenos (L=1 → 2,007 s), energia como detector, Euler explícito (energia cresce) × semi-implícito/Euler-Cromer (simplético), aprender o passo prevendo a variação (ligação com residuais), rollout autorregressivo, acúmulo de erros (Nε, fase escorrega, caos), remédios (treino multi-passo, redes hamiltonianas, assimilação de dados, híbridos).
+- Funções: `energia`, `simular(theta0, omega0, duracao, dt, metodo)`, `passo_verdadeiro` (50 subpassos de 0,001 s), `trajetoria_verdadeira`, `passo_rede`, `trajetoria_rede`, `medir_periodo`.
+- Dados/treino: 4000 estados θ U(−2.5,2.5), ω U(−6,6), semente 42; rede 2-64-64-2 tanh, Adam 0.003 → 0.0003, 3000 passos lote inteiro (9 s). Erro de um passo: 0,0003 rad. Rollout de 1 rad: maior erro por janela de 10 s 0,03 → 0,55 rad em 2 min; energia deriva para cima. Notebook ~21 s.

@@ -24,4 +24,12 @@ Um curso de inteligência artificial em português, do zero até um Transformer 
 | 09 | Linguagem 2: um mini modelo neural que escreve em inglês | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/09-modelo-neural-caracteres.ipynb) |
 | 10 | Linguagem 3: atenção e um Transformer em miniatura | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/10-transformer.ipynb) |
 
+## Bônus
+
+| Nº | Módulo | Notebook |
+|----|--------|----------|
+| B1 | O pêndulo: uma rede que aprende a dinâmica | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/B1-pendulo.ipynb) |
+| B2 | Redes convolucionais (CNN) para imagens | em breve |
+| B3 | Projeto final escolhido pelo aluno | em breve |
+
 Para rodar fora do Colab: `pip install -r requirements.txt` e abra os arquivos da pasta `modulos/` no Jupyter.
