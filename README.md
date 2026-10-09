@@ -22,6 +22,6 @@ Um curso de inteligência artificial em português, do zero até um Transformer 
 | 07 | PyTorch e a derivada automática | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/07-pytorch.ipynb) |
 | 08 | Linguagem 1: texto vira número | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/08-texto-vira-numero.ipynb) |
 | 09 | Linguagem 2: um mini modelo neural que escreve em inglês | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/09-modelo-neural-caracteres.ipynb) |
-| 10 | Linguagem 3: atenção e um Transformer em miniatura | em breve |
+| 10 | Linguagem 3: atenção e um Transformer em miniatura | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/10-transformer.ipynb) |
 
 Para rodar fora do Colab: `pip install -r requirements.txt` e abra os arquivos da pasta `modulos/` no Jupyter.

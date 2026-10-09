@@ -79,3 +79,10 @@
 - Funções: `montar_exemplos(indices, tamanho_contexto)` → (contextos, alvos) tensores, `criar_modelo(tamanho_contexto=8, dim_embedding=10, n_ocultos=200)`, `treinar_modelo(modelo, passos=6000, tamanho_lote=128, taxa=0.003, ...)` (usa X_treino/X_validacao globais), `gerar_texto(modelo, inicio, n, temperatura, semente)`, `perda_da_frase`, `mais_provaveis`.
 - Resultado: 26 117 parâmetros, treino ~12 s, perplexidade de validação 5.29 (bigrama 11.1, trigrama 6.4). Embeddings: pontuação agrupada, vogais próximas, algarismos espalhados.
 - Para o Módulo 10: comparar o Transformer com a perplexidade 5.29; usar o mesmo texto, `.lower()`, divisão 90/10 por posição.
+
+## Módulo 10: Atenção e Transformer (2026-10-09)
+- Arquivos: `fontes/10-transformer.py`, `modulos/10-transformer.ipynb`. Dados: `dados/alice.txt` (mesma preparação).
+- Conceitos: por que o contexto importa, consulta/chave/valor (analogia da biblioteca), autoatenção softmax(QKᵀ/√d + M)V com exemplo à mão (3 tokens, d=2), máscara causal, √d, cabeças, bloco Transformer (residual, LayerNorm, rede densa), embedding de posição, classes Python (`nn.Module`), AdamW e weight decay (regularização prometida no Módulo 05), geração autorregressiva, mapas de atenção, interpretabilidade; fechamento: pré-treinamento, ajuste fino, RLHF, IA Constitucional, limites (alucinação etc.), próximos passos.
+- Classes/funções: `CabecaAtencao`, `AtencaoVariasCabecas`, `BlocoTransformer`, `MiniTransformer(dim_modelo=64, n_cabecas=4, n_blocos=3, usar_mascara, usar_posicao)`, `sortear_lote`, `perda_media`, `treinar_transformer(modelo, passos=2000, tamanho_lote=32, taxa=0.003, fracao_reducao=0.8, ...)`, `gerar_texto`.
+- Resultado: 159 663 parâmetros, contexto 64, 2000 passos (89 s aqui com 4 threads; ~51 ms/passo com 2 threads), perplexidade de validação 4.32. Notebook inteiro: ~2m20s aqui; no Colab, estimado em 3 a 4 min. Exercícios: sem posição 1.985 × 1.776 (passo 500); sem máscara, perda de treino 0.047 e geração sem sentido.
+- Plano principal concluído (00 a 10). Bônus B1–B3 só se o aluno pedir.
