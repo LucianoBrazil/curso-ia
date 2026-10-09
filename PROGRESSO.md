@@ -56,3 +56,11 @@
 - Dados: 2000 chutes, v U(10,35), θ U(10,70), semente 42, divisão 1200/400/400. Rede 2-64-1, taxa 0.05, 300 épocas: erro médio 0.34 m no teste; fora da faixa (60 m/s, 40°) prevê 86 m contra 99 m simulados. Desafio: atributo "alcance sem ar" reduz o erro para 0.17 m, mas extrapola para cima.
 - Observação: neste contêiner o NumPy é lento com arrays grandes; não prometer razões fixas de tempo nos textos.
 - Para o Módulo 07: refazer em PyTorch a rede do Módulo 05 (softmax, dígitos) e conferir o autograd com o exemplo à mão do Módulo 04 (x=1, w1=0.5, w2=1, y=1 → dL/dw1 = −0.0821, dL/dw2 = −0.2174).
+
+## Módulo 07: PyTorch (2026-10-09)
+- Arquivos: `fontes/07-pytorch.py`, `modulos/07-pytorch.ipynb`.
+- Conceitos: tensor, float32 × float64, conversão NumPy ↔ PyTorch, `requires_grad`, `.backward()`, `.grad`, grafo computacional, gradientes do exemplo do Módulo 04 conferidos, acúmulo de gradientes (zerar), `torch.no_grad()`, otimizadores (SGD, momento como inércia, Adam), `nn.Linear`/`nn.ReLU`/`nn.Sequential`, peso (saídas, entradas), `nn.CrossEntropyLoss` com logits e rótulos inteiros, gradientes PyTorch = NumPy do Módulo 05 (diferença ~1e-17), escolha pela validação, tabela NumPy × PyTorch.
+- Funções: `treinar_reta(criar_otimizador, passos)`, `criar_rede_digitos()`, `para_tensores(indices)`, `acuracia(rede, X, y)`, `treinar_digitos(rede, otimizador, epocas=40, tamanho_lote=32, semente=0)` (usa X_treino/y_treino globais), `contar_parametros`.
+- Resultados: vale do Módulo 01 (200 passos): momento chega ao mínimo, Adam (taxa 1) quase; dígitos: SGD 0.1 → val 97.5%, Adam 0.001 → val 98.3%, teste 96.1%.
+- Instalação: o índice download.pytorch.org está bloqueado pelo proxy; `pip install -q torch` (PyPI) funciona, mas é grande e demora alguns minutos.
+- Para o Módulo 08: o corpus em inglês vai em `dados/` (100 KB a 1 MB), com download de raw.githubusercontent.com quando o notebook não achar `../dados/`.
