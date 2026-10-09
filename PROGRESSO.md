@@ -26,3 +26,11 @@
 - Dados: 200 dias de consumo de energia (banho min, horas de ar, lavagens; pesos 0.09, 1.0, 0.8; viés 2.5; ruído 0.5; semente 42). Bola lançada: h = 1.5 + 15t − 4.9t², 60 pontos. Desafio: pêndulo T² = 4π²L/g.
 - Taxas: sem normalizar diverge a partir de 0.0008; normalizado usa 0.1 a 0.3.
 - Para o Módulo 03: o aluno já usa `@`, `X.T`, `normalizar`; pode reaproveitar o padrão de treino com dois atributos (horas de estudo, exercícios).
+
+## Módulo 03: Regressão logística (2026-10-09)
+- Arquivos: `fontes/03-regressao-logistica.py`, `modulos/03-regressao-logistica.ipynb`.
+- Conceitos: classificação binária, classe, probabilidade, sigmoide (σ' = p(1−p), nota Fermi-Dirac), z = Xw + b, entropia cruzada, por que não MSE (gradiente some com p(1−p)), regra da cadeia apresentada como "engrenagens" (o Módulo 04 aprofunda), gradiente (1/n)Xᵀ(p−y), limiar, fronteira de decisão (reta), acurácia, matriz de confusão (VN, FP, FN, VP), comparação com `LogisticRegression(C=1e6)`.
+- Funções: `sigmoide`, `prever_probabilidade(X, w, b)`, `entropia_cruzada(p, y)` (com clip), `gradientes_logistica`, `acuracia`, `treinar_logistica(X, y, taxa, passos, w_inicial=None, b_inicial=0.0)` → w, b, hist_perda, hist_acuracia, `matriz_confusao`, `desenhar_matriz_confusao`, `desenhar_alunos`; cópias de `normalizar`/`desnormalizar_pesos`.
+- Dados: 200 alunos, horas U(0,20), exercícios inteiros 0–50, regra z = 0.4h + 0.1e − 7, rótulo sorteado (Bernoulli), semente 42. Acurácia no treino: 80%.
+- Avisado: acurácia medida no próprio treino; separação treino/teste fica para o Módulo 05.
+- Para o Módulo 04: o "próximo módulo" anunciado é o caso em que uma reta não separa as classes (XOR).
