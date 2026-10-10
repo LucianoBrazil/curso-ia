@@ -28,19 +28,16 @@
 # Para estudar isso, precisamos de uma tarefa cuja resposta dê para **conferir automaticamente**. Somar números de três algarismos é perfeita:
 # o Python sabe a resposta certa, e podemos medir o acerto sem ninguém corrigir à mão.
 #
-# **Sobre o tempo.** Alguns treinos deste módulo levam vários minutos. Para pular a espera, o notebook pode usar modelos já treinados,
-# guardados no arquivo `b3_pesos.pt` (na pasta `dados/` do repositório). Ele procura o arquivo em dois lugares:
-#
-# - na pasta `dados/`, se você rodar o notebook no seu computador, com o repositório inteiro;
-# - na pasta atual do Colab. Para isso, baixe o `b3_pesos.pt` pela página do repositório no GitHub e envie-o pelo painel de arquivos do Colab
-#   (o ícone de pasta, à esquerda) antes de rodar o notebook.
-#
-# Se não encontrar o arquivo, o notebook treina tudo do zero automaticamente: leva uns 10 minutos no Colab gratuito. Os resultados variam um
-# pouco de um treino para outro, mas as conclusões são as mesmas. Para treinar do zero mesmo tendo o arquivo, mude a variável abaixo para `True`.
+# **Sobre o tempo.** Alguns treinos deste módulo levam vários minutos. Para pular a espera, o notebook usa modelos já treinados, guardados no
+# arquivo `b3_pesos.pt` (2,6 MB, na pasta `dados/` do repositório). Ele procura o arquivo na pasta `dados/` (se você rodar o notebook no seu
+# computador, com o repositório inteiro) e na pasta atual; se não achar, baixa do GitHub. Só se o download falhar ele treina tudo do zero, o que
+# leva uns 10 minutos no Colab gratuito; os resultados variam um pouco de um treino para outro, mas as conclusões são as mesmas. Para treinar do
+# zero de propósito, mude a variável abaixo para `True`.
 
 # %%
 import os
 import time
+import urllib.request
 from collections import Counter
 
 import numpy as np
@@ -315,14 +312,20 @@ def treinar(escrever_resposta, passos=1500, tamanho_lote=64, taxa=1e-3, semente=
 
 NOME_PESOS = "b3_pesos.pt"
 LUGARES_DOS_PESOS = ["../dados/" + NOME_PESOS, NOME_PESOS]   # pasta dados/ do repositório e pasta atual (Colab)
+URL_PESOS = "https://raw.githubusercontent.com/LucianoBrazil/curso-ia/main/dados/" + NOME_PESOS
 
 
 def encontrar_pesos():
-    """O primeiro lugar em que o arquivo de pesos existe, ou None se não estiver em nenhum."""
+    """Procura o arquivo de pesos em dados/ e na pasta atual; se não achar, baixa do GitHub. Devolve o caminho, ou None."""
     for caminho in LUGARES_DOS_PESOS:
         if os.path.exists(caminho):
             return caminho
-    return None
+    try:
+        urllib.request.urlretrieve(URL_PESOS, NOME_PESOS + ".parcial")   # baixa com outro nome e só renomeia no fim:
+        os.replace(NOME_PESOS + ".parcial", NOME_PESOS)                  # um download interrompido não deixa arquivo pela metade
+        return NOME_PESOS
+    except OSError:
+        return None
 
 
 def modelo_com_pesos(estado):
@@ -335,7 +338,7 @@ def modelo_com_pesos(estado):
 caminho_pesos = None if TREINAR_DO_ZERO else encontrar_pesos()
 treinar_agora = caminho_pesos is None
 if treinar_agora and not TREINAR_DO_ZERO:
-    print("Não encontrei o arquivo b3_pesos.pt, nem em ../dados/ nem na pasta atual.")
+    print("Não encontrei o arquivo b3_pesos.pt (nem em ../dados/, nem na pasta atual) e não consegui baixá-lo do GitHub.")
     print("Vou treinar tudo do zero: leva uns 10 minutos no Colab gratuito (menos num computador rápido).")
 
 inicio = time.perf_counter()
@@ -555,8 +558,8 @@ plt.show()
 #    usamos a soma dos log-probabilidades de todos os tokens que o modelo escreveu.
 #
 # A taxa de aprendizado é pequena e cai até zero no fim: no RL, passos grandes desestabilizam o modelo com facilidade. Nos primeiros testes
-# deste módulo, com uma taxa maior, o acerto **caía** em vez de subir. São 200 passos; se o arquivo de pesos foi encontrado, o resultado vem
-# pronto dele, e, se não, o treino roda aqui mesmo.
+# deste módulo, com uma taxa maior, o acerto **caía** em vez de subir. São 200 passos; se os pesos foram carregados, o resultado vem pronto
+# deles, e, se não, o treino roda aqui mesmo.
 
 # %%
 def treinar_com_recompensa(modelo, passos=200, perguntas_por_passo=16, tentativas_por_pergunta=8, taxa=1e-4,

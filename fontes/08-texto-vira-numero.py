@@ -28,28 +28,35 @@
 #
 # Usamos *Alice's Adventures in Wonderland*, de Lewis Carroll (1865), em domínio público. O arquivo vem do Projeto Gutenberg,
 # na seleção distribuída pela biblioteca NLTK. Uma cópia fica na pasta `dados/` do repositório. Como o Colab abre só o notebook, a função
-# abaixo procura o arquivo localmente e, se não achar, pega o mesmo texto no corpus Gutenberg da NLTK, que baixa os livros de um repositório
-# público. Se a NLTK não estiver instalada, a função a instala antes (`subprocess` e `sys` servem só para rodar o `pip`, o instalador de
-# pacotes do Python).
+# abaixo procura o arquivo localmente e, se não achar, baixa do GitHub (`urllib` é a biblioteca do Python para acessar a internet). Se o
+# download falhar, ela tem um plano B: pega o mesmo texto no corpus Gutenberg da NLTK, instalando a biblioteca antes se preciso
+# (`subprocess` e `sys` servem só para rodar o `pip`, o instalador de pacotes do Python).
 
 # %%
 import os
 import re
 import subprocess
 import sys
+import urllib.request
 from collections import Counter
 
 import numpy as np
 import matplotlib.pyplot as plt
 
 CAMINHO_LOCAL = "../dados/alice.txt"
+URL_DO_TEXTO = "https://raw.githubusercontent.com/LucianoBrazil/curso-ia/main/dados/alice.txt"
 
 
 def carregar_texto():
-    """Lê o livro da pasta dados/ ou, se não existir (no Colab), pega o mesmo texto no corpus Gutenberg da NLTK."""
+    """Lê o livro de dados/; se não existir (no Colab), baixa do GitHub; se não conseguir, usa a cópia da NLTK."""
     if os.path.exists(CAMINHO_LOCAL):
         with open(CAMINHO_LOCAL, encoding="utf-8") as arquivo:
             return arquivo.read()
+    try:
+        with urllib.request.urlopen(URL_DO_TEXTO, timeout=30) as resposta:
+            return resposta.read().decode("utf-8")
+    except OSError:                                       # sem acesso ao GitHub: plano B, a cópia da NLTK
+        pass
     try:
         import nltk
     except ImportError:                                   # instala a NLTK, se ainda não estiver instalada

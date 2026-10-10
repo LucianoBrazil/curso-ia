@@ -86,6 +86,7 @@ import os
 import subprocess
 import sys
 import time
+import urllib.request
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -155,13 +156,19 @@ print((pesos @ V).numpy().round(3))
 
 # %%
 CAMINHO_LOCAL = "../dados/alice.txt"
+URL_DO_TEXTO = "https://raw.githubusercontent.com/LucianoBrazil/curso-ia/main/dados/alice.txt"
 
 
 def carregar_texto():
-    """Vimos isso no Módulo 08: lê o livro de dados/ ou pega o mesmo texto no corpus Gutenberg da NLTK."""
+    """Vimos isso no Módulo 08: lê o livro de dados/, baixa do GitHub ou usa a cópia da NLTK."""
     if os.path.exists(CAMINHO_LOCAL):
         with open(CAMINHO_LOCAL, encoding="utf-8") as arquivo:
             return arquivo.read()
+    try:
+        with urllib.request.urlopen(URL_DO_TEXTO, timeout=30) as resposta:
+            return resposta.read().decode("utf-8")
+    except OSError:                                       # sem acesso ao GitHub: plano B, a cópia da NLTK
+        pass
     try:
         import nltk
     except ImportError:                                   # instala a NLTK, se ainda não estiver instalada

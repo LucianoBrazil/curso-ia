@@ -4,12 +4,11 @@ Um curso de inteligência artificial em português, do zero até um Transformer 
 
 ## Como estudar
 
-1. Na primeira vez, autorize o Colab a acessar o GitHub, porque o repositório é privado: no Colab, abra **Arquivo › Abrir notebook**, vá à aba **GitHub**, marque a opção de incluir repositórios privados ("Include private repos") e entre com a sua conta do GitHub. Depois disso, os links "Abrir no Colab" funcionam.
-2. Abra cada módulo pelo link "Abrir no Colab" da tabela abaixo. Não precisa instalar nada.
-3. Execute as células em ordem, de cima para baixo, com Shift+Enter.
-4. Faça os exercícios da seção "Mão na massa" antes de olhar as soluções.
+1. Abra cada módulo pelo link "Abrir no Colab" da tabela abaixo. Não precisa instalar nada nem ter conta no GitHub.
+2. Execute as células em ordem, de cima para baixo, com Shift+Enter.
+3. Faça os exercícios da seção "Mão na massa" antes de olhar as soluções.
 
-Sobre os arquivos de dados: os módulos 08 a 10 obtêm sozinhos o texto de *Alice no País das Maravilhas* (do corpus Gutenberg da biblioteca NLTK). No B3, para não esperar uns 10 minutos de treino, baixe o arquivo `dados/b3_pesos.pt` pela página do repositório no GitHub e envie-o pelo painel de arquivos do Colab (o ícone de pasta, à esquerda) antes de rodar o notebook; sem ele, o notebook treina tudo do zero.
+Sobre os arquivos de dados: os notebooks que precisam de arquivos da pasta `dados/` (08 a 10 e B3) os baixam sozinhos do GitHub. Se o download falhar, os módulos 08 a 10 usam a cópia de *Alice no País das Maravilhas* da biblioteca NLTK, e o B3 treina os seus modelos do zero (uns 10 minutos no Colab gratuito).
 
 ## Módulos
 

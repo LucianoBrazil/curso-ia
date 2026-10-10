@@ -68,7 +68,7 @@
 ## Módulo 08: Texto vira número (2026-10-09)
 - Arquivos: `fontes/08-texto-vira-numero.py`, `modulos/08-texto-vira-numero.ipynb`, `dados/alice.txt`.
 - Dados: *Alice's Adventures in Wonderland* (Lewis Carroll, 1865, domínio público), arquivo `carroll-alice.txt` do corpus Gutenberg do NLTK (baixado de raw.githubusercontent.com/nltk/nltk_data, gutenberg.zip). 144 395 caracteres, ASCII. Usado com `.lower()`: vocabulário de 47 caracteres (inclui '\n'). Divisão por posição: 90% treino (129 955), 10% validação.
-- Carregamento: `carregar_texto()` lê `../dados/alice.txt` ou, se não existir (Colab), usa `nltk.download("gutenberg", quiet=True, raise_on_error=True)` e `nltk.corpus.gutenberg.raw("carroll-alice.txt")`, instalando a `nltk` se preciso (texto idêntico ao arquivo local).
+- Carregamento: `carregar_texto()` lê `../dados/alice.txt`; se não existir (Colab), baixa da URL raw do GitHub; se falhar, usa `nltk.download("gutenberg", quiet=True, raise_on_error=True)` e `nltk.corpus.gutenberg.raw("carroll-alice.txt")`, instalando a `nltk` se preciso (texto idêntico ao arquivo local).
 - Conceitos: modelo de linguagem, tokens (caractere/palavra/subword), vocabulário, codificar/decodificar, probabilidade condicional, bigrama por contagem, mapa de calor, suavização (+1), amostragem, temperatura (nota Boltzmann), entropia cruzada e perplexidade, explosão combinatória de n-gramas.
 - Funções: `carregar_texto`, `indice_de`, `caractere_de`, `codificar`, `decodificar`, `contar_bigramas`, `probabilidades_bigrama(contagens, suavizacao)`, `gerar_texto(probabilidades, inicio, n, temperatura, semente)`, `perplexidade_bigrama`.
 - Perplexidade na validação: uniforme 47, unigrama 20.9, bigrama 11.1, trigrama (suavização 0.1) 6.4. Use esses números para comparar no Módulo 09.
@@ -104,10 +104,15 @@
 - Tarefa: somar números de 3 algarismos; formatos `347+589=0936.` e `347+589=7+9+0=16,4+8+1=13,3+5+1=09,0936.`; vocabulário "0123456789+=,.()[]CAL"; alvo -100 na pergunta. Dados (semente 42): teste 500, validação 300, treino 1000 contas fixas. MiniTransformer do Módulo 10 parametrizado (155 285 parâmetros).
 - Resultados: direto 54,2% no teste (100% no treino; em protótipo com outro sorteio, ~7%), com pensamento 97,6%. Autoconsistência (cópia do passo 300, T=0,7, 200 perguntas): 45% → 64% (21 tentativas), gulosa 66%. RL estilo GRPO (16 perguntas × 8 tentativas, lr 1e-4 com decaimento, vantagem/desvio, 200 passos): 66,8% → 88,6% no teste. Agente CALC(...) treinado com as mesmas 1000 contas: 100%; calculadora com defeito: 50,2%. Verificador (desafio): 96% com 21 tentativas.
 - Lições de prototipagem: com contas novas a cada passo, o direto chega a 100% (o efeito vira só velocidade); RL com lr 3e-4 desestabiliza (acerto cai).
-- Pesos: procura `b3_pesos.pt` em `../dados/` e na pasta atual (arquivo enviado ao Colab); se não achar, ou com `TREINAR_DO_ZERO = True`, treina tudo e salva (em dados/ se a pasta existir, senão na pasta atual, com aviso para baixar). Com pesos: ~60 s com 2 threads; do zero: ~5 min com 2 threads aqui (~10 min estimados no Colab).
+- Pesos: procura `b3_pesos.pt` em `../dados/` e na pasta atual; se não achar, baixa do GitHub (para `.parcial` e renomeia); se falhar, ou com `TREINAR_DO_ZERO = True`, treina tudo e salva (em dados/ se a pasta existir, senão na pasta atual, com aviso para baixar). Com pesos: ~60 s com 2 threads; do zero: ~5 min com 2 threads aqui (~10 min estimados no Colab).
 - Plano principal e bônus concluídos.
 
 ## Manutenção: repositório privado (2026-10-10)
 - O repositório ficou privado: o Colab não baixa mais arquivos pela URL raw do GitHub. Módulos 08, 09 e 10 passaram a usar o corpus Gutenberg da NLTK quando `../dados/alice.txt` não existe; o B3 procura os pesos em `../dados/` e na pasta atual e treina do zero se não achar.
 - README: passo de autorizar o GitHub no Colab (incluir repositórios privados) e nota sobre os dados; CLAUDE.md: regra de dados atualizada.
 - Testado com e sem arquivos locais (08, 09, 10, B3; o B3 também carregando da pasta atual). Neste contêiner, a NLTK nova recusa downloads via proxy: para testar, usar `NLTK_ALLOW_PROXIED_URLOPEN=1` só no ambiente (o Colab não usa proxy).
+
+## Manutenção: repositório público de novo (2026-10-10)
+- Downloads da URL raw do GitHub voltaram como caminho principal (08, 09, 10 e B3); a NLTK (08 a 10) e o treino do zero (B3) ficaram como plano B.
+- README sem o passo de autorizar o GitHub no Colab; CLAUDE.md com a regra de dados para repositório público (com plano B obrigatório).
+- E-mail pessoal removido do histórico: o commit inicial passou a usar o e-mail noreply do GitHub (histórico reescrito e enviado com force push).
