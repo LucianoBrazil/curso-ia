@@ -98,3 +98,11 @@
 - Conceitos: convolução (correlação cruzada) à mão (imagem 5×5 com borda, filtro [-1,0,1] → mapa [0,3,3]), filtro de borda = derivada discreta, padding, canais, max pooling, compartilhamento de pesos, contagem de parâmetros, `nn.Conv2d`/`nn.MaxPool2d` conferidos com a função NumPy, deslocamento de imagens, invariância à translação (parcial), global pooling (só citado), filtros e mapas aprendidos, história (LeNet, AlexNet), aumento de dados.
 - Funções: `convoluir(imagem, filtro)`, `para_tensores(indices, imagens_fonte)` → (n,1,8,8), `criar_rede_densa`, `criar_cnn` (6090 parâmetros), `treinar(rede, X, y, ...)`, `acuracia`, `deslocar(imagens, linhas, colunas)`.
 - Resultados (mesma divisão do Módulo 05, semente 42): validação 98,3% nas duas; teste densa 96,1%, CNN 98,1%. Deslocadas 1 px: densa 38–49%, CNN 49–82%. Desafio: densa com aumento de dados 80–91% nas deslocadas (93,1% nas originais). Notebook ~16 s.
+
+## Módulo B3: Na fronteira, modelos que pensam (2026-10-10)
+- Arquivos: `fontes/B3-modelos-que-pensam.py`, `modulos/B3-modelos-que-pensam.ipynb`, `dados/b3_pesos.pt` (2,6 MB: modelos direto, com pensamento, cópia do meio do treino e pós-RL, mais históricos). README: B3 renomeado para o tema.
+- Tarefa: somar números de 3 algarismos; formatos `347+589=0936.` e `347+589=7+9+0=16,4+8+1=13,3+5+1=09,0936.`; vocabulário "0123456789+=,.()[]CAL"; alvo -100 na pergunta. Dados (semente 42): teste 500, validação 300, treino 1000 contas fixas. MiniTransformer do Módulo 10 parametrizado (155 285 parâmetros).
+- Resultados: direto 54,2% no teste (100% no treino; em protótipo com outro sorteio, ~7%), com pensamento 97,6%. Autoconsistência (cópia do passo 300, T=0,7, 200 perguntas): 45% → 64% (21 tentativas), gulosa 66%. RL estilo GRPO (16 perguntas × 8 tentativas, lr 1e-4 com decaimento, vantagem/desvio, 200 passos): 66,8% → 88,6% no teste. Agente CALC(...) treinado com as mesmas 1000 contas: 100%; calculadora com defeito: 50,2%. Verificador (desafio): 96% com 21 tentativas.
+- Lições de prototipagem: com contas novas a cada passo, o direto chega a 100% (o efeito vira só velocidade); RL com lr 3e-4 desestabiliza (acerto cai).
+- `TREINAR_DO_ZERO = False` por padrão (notebook ~60 s com 2 threads); True treina tudo (~3,5 min aqui com 4 threads; ~10 min estimados no Colab) e salva em dados/.
+- Plano principal e bônus concluídos.

@@ -30,6 +30,6 @@ Um curso de inteligência artificial em português, do zero até um Transformer 
 |----|--------|----------|
 | B1 | O pêndulo: uma rede que aprende a dinâmica | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/B1-pendulo.ipynb) |
 | B2 | Redes convolucionais (CNN) para imagens | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/B2-redes-convolucionais.ipynb) |
-| B3 | Projeto final escolhido pelo aluno | em breve |
+| B3 | Na fronteira: modelos que pensam antes de responder | [Abrir no Colab](https://colab.research.google.com/github/LucianoBrazil/curso-ia/blob/main/modulos/B3-modelos-que-pensam.ipynb) |
 
 Para rodar fora do Colab: `pip install -r requirements.txt` e abra os arquivos da pasta `modulos/` no Jupyter.
