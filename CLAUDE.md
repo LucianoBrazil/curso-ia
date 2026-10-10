@@ -82,8 +82,8 @@ Regras gerais:
 ## Dados
 
 - Prefira dados gerados no próprio notebook (simulações físicas, dados sintéticos) ou datasets que vêm embutidos no scikit-learn, sem download (por exemplo `load_digits`).
-- Para os módulos 08 a 10, use um texto em inglês de domínio público salvo em `dados/` (de 100 KB a 1 MB). Uma opção é o corpus Gutenberg do NLTK (por exemplo, Alice in Wonderland), que é baixado de raw.githubusercontent.com. Se nenhum download funcionar, escreva você mesmo um corpus de frases simples e variadas em inglês, com pelo menos 100 KB, e diga isso no notebook. Registre a fonte no notebook e no `PROGRESSO.md`. O mesmo arquivo serve para os três módulos.
-- Como o Colab não traz a pasta `dados/`, o notebook deve procurar o arquivo localmente (`../dados/`) e, se não achar, baixá-lo de `https://raw.githubusercontent.com/LucianoBrazil/curso-ia/main/dados/...`.
+- Para os módulos 08 a 10, use um texto em inglês de domínio público salvo em `dados/` (de 100 KB a 1 MB). O curso usa Alice in Wonderland, do corpus Gutenberg do NLTK (`dados/alice.txt`; no Colab, obtido com `nltk.download("gutenberg")`). Se nenhum download funcionar, escreva você mesmo um corpus de frases simples e variadas em inglês, com pelo menos 100 KB, e diga isso no notebook. Registre a fonte no notebook e no `PROGRESSO.md`. O mesmo arquivo serve para os três módulos.
+- O repositório é privado: o Colab não consegue baixar arquivos dele pela URL raw do GitHub, e nenhum notebook pode depender disso. O notebook procura o arquivo em `../dados/` (quem roda com o repositório inteiro) e, quando fizer sentido, na pasta atual (quem enviou o arquivo pelo painel de arquivos do Colab). Se não achar, obtém os dados de uma fonte pública que funcione no Colab (por exemplo, `nltk.download("gutenberg")`, instalando a `nltk` se preciso) ou, no caso de pesos de modelos, treina do zero automaticamente e avisa quanto tempo isso leva. Teste também o caminho sem os arquivos locais, rodando uma cópia do notebook numa pasta sem `../dados/`.
 
 ## Plano do curso
 

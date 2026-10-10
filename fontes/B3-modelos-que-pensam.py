@@ -28,14 +28,19 @@
 # Para estudar isso, precisamos de uma tarefa cuja resposta dê para **conferir automaticamente**. Somar números de três algarismos é perfeita:
 # o Python sabe a resposta certa, e podemos medir o acerto sem ninguém corrigir à mão.
 #
-# **Sobre o tempo.** Alguns treinos deste módulo levariam vários minutos no Colab. Por isso, o notebook carrega modelos já treinados da pasta
-# `dados/` do repositório. Se quiser treinar tudo do zero, mude a variável abaixo para `True` (leva uns 10 minutos no Colab gratuito);
-# os resultados vão variar um pouco, mas as conclusões são as mesmas.
+# **Sobre o tempo.** Alguns treinos deste módulo levam vários minutos. Para pular a espera, o notebook pode usar modelos já treinados,
+# guardados no arquivo `b3_pesos.pt` (na pasta `dados/` do repositório). Ele procura o arquivo em dois lugares:
+#
+# - na pasta `dados/`, se você rodar o notebook no seu computador, com o repositório inteiro;
+# - na pasta atual do Colab. Para isso, baixe o `b3_pesos.pt` pela página do repositório no GitHub e envie-o pelo painel de arquivos do Colab
+#   (o ícone de pasta, à esquerda) antes de rodar o notebook.
+#
+# Se não encontrar o arquivo, o notebook treina tudo do zero automaticamente: leva uns 10 minutos no Colab gratuito. Os resultados variam um
+# pouco de um treino para outro, mas as conclusões são as mesmas. Para treinar do zero mesmo tendo o arquivo, mude a variável abaixo para `True`.
 
 # %%
 import os
 import time
-import urllib.request
 from collections import Counter
 
 import numpy as np
@@ -43,7 +48,7 @@ import matplotlib.pyplot as plt
 import torch
 from torch import nn
 
-TREINAR_DO_ZERO = False   # True: treina todos os modelos aqui; False: carrega os pesos já treinados
+TREINAR_DO_ZERO = False   # True: treina tudo aqui, mesmo que o arquivo de pesos exista
 
 # %% [markdown]
 # ## 2. A tarefa: somar números de três algarismos
@@ -309,16 +314,15 @@ def treinar(escrever_resposta, passos=1500, tamanho_lote=64, taxa=1e-3, semente=
 
 
 NOME_PESOS = "b3_pesos.pt"
-CAMINHO_PESOS = "../dados/" + NOME_PESOS
-URL_PESOS = "https://raw.githubusercontent.com/LucianoBrazil/curso-ia/main/dados/" + NOME_PESOS
+LUGARES_DOS_PESOS = ["../dados/" + NOME_PESOS, NOME_PESOS]   # pasta dados/ do repositório e pasta atual (Colab)
 
 
-def obter_pesos():
-    """Lê os pesos de dados/ ou, no Colab, baixa do GitHub. weights_only=True: carrega só números, nunca código."""
-    caminho = CAMINHO_PESOS if os.path.exists(CAMINHO_PESOS) else NOME_PESOS
-    if not os.path.exists(caminho):
-        urllib.request.urlretrieve(URL_PESOS, caminho)
-    return torch.load(caminho, weights_only=True)
+def encontrar_pesos():
+    """O primeiro lugar em que o arquivo de pesos existe, ou None se não estiver em nenhum."""
+    for caminho in LUGARES_DOS_PESOS:
+        if os.path.exists(caminho):
+            return caminho
+    return None
 
 
 def modelo_com_pesos(estado):
@@ -328,12 +332,18 @@ def modelo_com_pesos(estado):
     return modelo
 
 
+caminho_pesos = None if TREINAR_DO_ZERO else encontrar_pesos()
+treinar_agora = caminho_pesos is None
+if treinar_agora and not TREINAR_DO_ZERO:
+    print("Não encontrei o arquivo b3_pesos.pt, nem em ../dados/ nem na pasta atual.")
+    print("Vou treinar tudo do zero: leva uns 10 minutos no Colab gratuito (menos num computador rápido).")
+
 inicio = time.perf_counter()
-if TREINAR_DO_ZERO:
+if treinar_agora:
     modelo_direto, historico_direto, _ = treinar(resposta_direta)
     modelo_pensamento, historico_pensamento, (passo_meio, pesos_meio) = treinar(resposta_com_pensamento, guardar_meio=True)
 else:
-    pesos = obter_pesos()
+    pesos = torch.load(caminho_pesos, weights_only=True)   # weights_only=True: carrega só números, nunca código
     modelo_direto, historico_direto = modelo_com_pesos(pesos["direto"]), pesos["historico_direto"]
     modelo_pensamento, historico_pensamento = modelo_com_pesos(pesos["pensamento"]), pesos["historico_pensamento"]
     passo_meio, pesos_meio = pesos["passo_meio"], pesos["pensamento_meio"]
@@ -545,8 +555,8 @@ plt.show()
 #    usamos a soma dos log-probabilidades de todos os tokens que o modelo escreveu.
 #
 # A taxa de aprendizado é pequena e cai até zero no fim: no RL, passos grandes desestabilizam o modelo com facilidade. Nos primeiros testes
-# deste módulo, com uma taxa maior, o acerto **caía** em vez de subir. São 200 passos, por isso o resultado vem pronto do arquivo de pesos
-# (a não ser que você tenha escolhido treinar do zero).
+# deste módulo, com uma taxa maior, o acerto **caía** em vez de subir. São 200 passos; se o arquivo de pesos foi encontrado, o resultado vem
+# pronto dele, e, se não, o treino roda aqui mesmo.
 
 # %%
 def treinar_com_recompensa(modelo, passos=200, perguntas_por_passo=16, tentativas_por_pergunta=8, taxa=1e-4,
@@ -592,15 +602,18 @@ def treinar_com_recompensa(modelo, passos=200, perguntas_por_passo=16, tentativa
 
 
 def salvar_pesos(conteudo):
-    """Salva os pesos em dados/ (se existir) ou na pasta atual."""
-    caminho = CAMINHO_PESOS if os.path.isdir(os.path.dirname(CAMINHO_PESOS)) else NOME_PESOS
+    """Salva os pesos em dados/ (se a pasta existir) ou na pasta atual."""
+    caminho = LUGARES_DOS_PESOS[0] if os.path.isdir("../dados") else NOME_PESOS
     torch.save(conteudo, caminho)
     print("pesos salvos em", caminho)
+    if caminho == NOME_PESOS:
+        print("No Colab, baixe esse arquivo pelo painel de arquivos: o Colab apaga tudo quando a sessão termina, e com ele")
+        print("você não precisa treinar de novo da próxima vez (é só enviá-lo de volta antes de rodar o notebook).")
 
 
 modelo_recompensa = modelo_com_pesos(pesos_meio)     # começa igual ao modelo do meio do treino
 inicio = time.perf_counter()
-if TREINAR_DO_ZERO:
+if treinar_agora:
     historico_recompensa = treinar_com_recompensa(modelo_recompensa)
     salvar_pesos({
         "direto": modelo_direto.state_dict(), "historico_direto": historico_direto,

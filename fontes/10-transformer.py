@@ -83,8 +83,9 @@
 
 # %%
 import os
+import subprocess
+import sys
 import time
-import urllib.request
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -154,16 +155,20 @@ print((pesos @ V).numpy().round(3))
 
 # %%
 CAMINHO_LOCAL = "../dados/alice.txt"
-URL_DO_TEXTO = "https://raw.githubusercontent.com/LucianoBrazil/curso-ia/main/dados/alice.txt"
 
 
 def carregar_texto():
-    """Vimos isso no Módulo 08: lê o livro de dados/ ou baixa do GitHub."""
+    """Vimos isso no Módulo 08: lê o livro de dados/ ou pega o mesmo texto no corpus Gutenberg da NLTK."""
     if os.path.exists(CAMINHO_LOCAL):
         with open(CAMINHO_LOCAL, encoding="utf-8") as arquivo:
             return arquivo.read()
-    with urllib.request.urlopen(URL_DO_TEXTO) as resposta:
-        return resposta.read().decode("utf-8")
+    try:
+        import nltk
+    except ImportError:                                   # instala a NLTK, se ainda não estiver instalada
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "nltk"], check=True)
+        import nltk
+    nltk.download("gutenberg", quiet=True, raise_on_error=True)   # baixa os livros (só na primeira vez)
+    return nltk.corpus.gutenberg.raw("carroll-alice.txt")
 
 
 texto = carregar_texto().lower()

@@ -27,29 +27,36 @@
 # ## 2. O texto
 #
 # Usamos *Alice's Adventures in Wonderland*, de Lewis Carroll (1865), em domínio público. O arquivo vem do Projeto Gutenberg,
-# na seleção distribuída pela biblioteca NLTK. Ele fica na pasta `dados/` do repositório. O Colab abre só o notebook, então a função
-# abaixo procura o arquivo localmente e, se não achar, baixa do GitHub. (`urllib` é a biblioteca do Python para acessar a internet.)
+# na seleção distribuída pela biblioteca NLTK. Uma cópia fica na pasta `dados/` do repositório. Como o Colab abre só o notebook, a função
+# abaixo procura o arquivo localmente e, se não achar, pega o mesmo texto no corpus Gutenberg da NLTK, que baixa os livros de um repositório
+# público. Se a NLTK não estiver instalada, a função a instala antes (`subprocess` e `sys` servem só para rodar o `pip`, o instalador de
+# pacotes do Python).
 
 # %%
 import os
 import re
-import urllib.request
+import subprocess
+import sys
 from collections import Counter
 
 import numpy as np
 import matplotlib.pyplot as plt
 
 CAMINHO_LOCAL = "../dados/alice.txt"
-URL_DO_TEXTO = "https://raw.githubusercontent.com/LucianoBrazil/curso-ia/main/dados/alice.txt"
 
 
 def carregar_texto():
-    """Lê o livro da pasta dados/ ou, se não existir (no Colab), baixa do GitHub."""
+    """Lê o livro da pasta dados/ ou, se não existir (no Colab), pega o mesmo texto no corpus Gutenberg da NLTK."""
     if os.path.exists(CAMINHO_LOCAL):
         with open(CAMINHO_LOCAL, encoding="utf-8") as arquivo:
             return arquivo.read()
-    with urllib.request.urlopen(URL_DO_TEXTO) as resposta:
-        return resposta.read().decode("utf-8")
+    try:
+        import nltk
+    except ImportError:                                   # instala a NLTK, se ainda não estiver instalada
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "nltk"], check=True)
+        import nltk
+    nltk.download("gutenberg", quiet=True, raise_on_error=True)   # baixa os livros (só na primeira vez)
+    return nltk.corpus.gutenberg.raw("carroll-alice.txt")
 
 
 texto = carregar_texto().lower()   # tudo em minúsculas, para simplificar
